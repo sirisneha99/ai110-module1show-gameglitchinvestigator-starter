@@ -60,7 +60,7 @@ This is a number guessing game where the player tries to guess a secret number b
 
 <img width="1470" height="923" alt="Screenshot 2026-03-22 at 22 31 41" src="https://github.com/user-attachments/assets/4ce658db-22d6-40e3-b21f-b10411414238" />
 
-## 📸 Challenge 1 pAdvanced Edge-Case Testing
+## 📸 Challenge 1 Advanced Edge-Case Testing
 
 <img width="966" height="320" alt="Screenshot 2026-03-22 at 22 35 34" src="https://github.com/user-attachments/assets/3dd64519-5f5b-4eaa-83bb-c30664a47ba8" />
 
