@@ -57,7 +57,9 @@ This is a number guessing game where the player tries to guess a secret number b
 
 > **Screenshot of fixed game — hints now correctly say "Go LOWER" when guess is too high:**
 
-[Insert screenshot of your winning game here — take one with Cmd+Shift+4 on Mac, drag to select the game window, then drag the saved image file into this README in VS Code]
+
+<img width="1470" height="923" alt="Screenshot 2026-03-22 at 22 31 41" src="https://github.com/user-attachments/assets/4ce658db-22d6-40e3-b21f-b10411414238" />
+
 
 ## 🚀 Stretch Features
 
