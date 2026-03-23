@@ -24,13 +24,17 @@ When I first ran the game, it appeared to be a working number guessing game with
 
 ## 2. How did you use AI as a teammate?
 
-On this project I used GitHub Copilot in VS Code, including Copilot Chat and Inline Chat. One example of a correct AI suggestion was when I asked Copilot to explain the `check_guess` function in `logic_utils.py` — it correctly identified that the comparison operators were flipped, meaning `guess > secret` was returning "Go Lower" when it should return "Go Higher," and vice versa. I verified this by manually tracing through the logic with the known secret number (14) and my guess (50), confirming the condition was indeed backwards. One example of a misleading suggestion was when Copilot suggested fixing the score bug by resetting the score variable to zero at the top of the guess handler, but this would have wiped the score on every single guess, not just at the start of a new game. I caught this by reading the diff carefully and realizing the reset was in the wrong place in the code flow.
+On this project I used Claude (by Anthropic) as my AI assistant since GitHub Copilot had reached its usage quota. I pasted my full `app.py` and `logic_utils.py` code directly into the chat and described the bugs I observed while playing.
+
+**Correct AI suggestion:** Claude correctly identified that the hint bug was caused by a type mismatch in `app.py` — on even-numbered attempts, the secret number was being converted to a string using `str(st.session_state.secret)`, which caused Python's string comparison to produce wrong results instead of a numeric comparison. I verified this by reading the specific lines in `app.py` where `if st.session_state.attempts % 2 == 0` was switching the secret to a string, and confirmed it matched exactly what Claude described.
+
+**Incorrect/misleading suggestion:** Claude's first draft of `logic_utils.py` still contained the old buggy hint messages — `check_guess` returned `"Go HIGHER!"` when the guess was too high, when it should say `"Go LOWER!"`. I caught this by comparing the function's return values against what the game should logically do: if your guess is too high, you need to go lower. I pointed this out and Claude corrected the messages in the next version.
 
 ---
 
 ## 3. Debugging and testing your fixes
 
-I decided a bug was truly fixed only when two things were true: the pytest test I wrote for it passed, and I also manually verified the behavior in the live Streamlit app. For the hint logic bug, I wrote a pytest test in `tests/test_game_logic.py` that called `check_guess(50, 14)` and asserted it returned a "lower" hint, this test failed before my fix and passed after, which confirmed the repair. I also manually played the game after the fix, starting with 50 against a secret of 14, and verified the hint correctly said "Go LOWER." Copilot helped me write the initial structure of the test and suggested the assertion format, though I had to adjust the expected return value to match what the function actually returned.
+I verified each fix in two ways: by manually playing the game in the browser and by running pytest. For manual testing, I opened the Developer Debug Info panel to see the secret number, then made a guess I knew should trigger a specific hint — for example, guessing 80 when the secret was 31 to confirm it now correctly said "Go LOWER." For automated testing, I ran the existing tests in `tests/test_game_logic.py` using `pytest` in the terminal. The three starter tests (`test_winning_guess`, `test_guess_too_high`, `test_guess_too_low`) all passed after my fixes to `logic_utils.py`, confirming the core logic was correct. Claude helped me understand what each test was asserting and why the return value needed to be a tuple like `("Too High", "📈 Go LOWER!")` rather than just a string.
 
 ---
 
